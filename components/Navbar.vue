@@ -1,13 +1,25 @@
 <template>
-  <v-app-bar :clipped-left="clipped" fixed app>
+  <v-app-bar :clipped-left="clipped" fixed>
     <v-app-bar-title>Crypto Wallet Tracker</v-app-bar-title>
     <v-spacer></v-spacer>
-    <img class="google-icon" src="search.png" alt="google-icon" />
+    <GoogleSignIn />
   </v-app-bar>
 </template>
 
 <script>
-export default {}
+import GoogleSignIn from './Auth/GoogleSignIn'
+export default {
+  components: {
+    GoogleSignIn,
+  },
+  data() {
+    return {
+      clipped: false,
+      drawer: false,
+      fixed: false,
+    }
+  },
+}
 </script>
 
 <style scoped>
