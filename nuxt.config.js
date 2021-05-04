@@ -56,8 +56,7 @@ export default {
           auth:{
             initialize: {
               ssr: true,
-              onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-              subscribeManually: false
+              onAuthStateChangedMutation: 'auth/ON_AUTH_STATE_CHANGED_MUTATION',
             },
           }
         }
