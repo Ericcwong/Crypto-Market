@@ -1,9 +1,8 @@
 <template>
-  <div class="google-portal">
-    <button @click.prevent="googleSignup">
-      <img class="google-icon" src="search.png" alt="Google Icon" />
-    </button>
-  </div>
+  <b-dropdown-item @click.prevent="googleSignup">
+    Continue with: &nbsp;
+    <img class="google-icon" src="search.png" alt="Google Icon" />
+  </b-dropdown-item>
 </template>
 
 <script>
@@ -42,7 +41,11 @@ export default {
 </script>
 
 <style scoped>
+.button {
+  display: flex;
+  align-items: center;
+}
 .google-icon {
-  width: 35px;
+  width: 17px;
 }
 </style>
