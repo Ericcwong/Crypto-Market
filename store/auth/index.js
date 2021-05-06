@@ -1,6 +1,5 @@
 export const state = () => ({
-    user: { email: "", uid: "", admin: null },
-    userSignUpStatus: "",
+    user: { email: "", uid: "", displayName: ""},
     error: {
       errorCode: null,
       errorMessage: null,
