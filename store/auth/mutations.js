@@ -3,8 +3,8 @@ const mutations = {
       if(!authUser){
         state.user = null
       }else{
-        const { email, uid, displayName} = authUser
-        state.user = { email, uid, displayName}
+        const { email, uid, displayName, photoURL} = authUser
+        state.user = { email, uid, displayName, photoURL}
         
       }
     },
