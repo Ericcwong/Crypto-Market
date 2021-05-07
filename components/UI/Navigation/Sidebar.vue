@@ -3,18 +3,24 @@
     <div class="logo">
       <div class="logo-name">Crypto Wallet Tracker</div>
     </div>
-    <div class="buttons">
-      <b-button v-b-modal.modal-1>Launch demo modal</b-button>
-
-      <b-modal id="modal-1" title="BootstrapVue">
-        <p class="my-4">Hello from modal!</p>
-      </b-modal>
+    <div class="button-container">
+      <div class="buttons">
+        <b-button v-b-modal.modal_1> <BIconWallet2 /> Add Wallet</b-button>
+        <AddWallet :modal="modal_1" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import { BIconWallet2 } from 'bootstrap-vue'
+import AddWallet from '~/components/UI/Wallet/AddWallet'
+export default {
+  components: {
+    BIconWallet2,
+    AddWallet,
+  },
+}
 </script>
 
 <style scoped>
@@ -28,5 +34,10 @@ export default {}
   align-items: center;
   font-size: 1.5rem;
   height: 8%;
+}
+.button-container {
+  display: flex;
+}
+.buttons {
 }
 </style>
