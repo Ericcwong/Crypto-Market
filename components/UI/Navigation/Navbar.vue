@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#">Crypto Wallet Tracker</b-navbar-brand>
+      <b-navbar-brand href="#">Home</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -18,18 +18,19 @@
               >Search</b-button
             >
           </b-nav-form>
-
-          <b-nav-item-dropdown text="Lang" right>
+          <!-- Feature Coming soon! -->
+          <!-- <b-nav-item-dropdown text="Lang" right>
             <b-dropdown-item href="#">EN</b-dropdown-item>
             <b-dropdown-item href="#">ES</b-dropdown-item>
             <b-dropdown-item href="#">RU</b-dropdown-item>
             <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
 
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>User</em>
+              <em v-if="user === null">User</em>
+              <b-avatar v-if="user" :src="user.photoURL"></b-avatar>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <GoogleSignIn v-if="user === null" />
@@ -47,7 +48,7 @@
 </template>
 
 <script>
-import GoogleSignIn from './Auth/GoogleSignIn'
+import GoogleSignIn from '~/components/Auth/GoogleSignIn'
 export default {
   components: {
     GoogleSignIn,
