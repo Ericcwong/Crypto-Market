@@ -5,19 +5,16 @@
     </div>
     <div class="button-container">
       <div class="buttons">
-        <b-button v-b-modal.modal_1> <BIconWallet2 /> Add Wallet</b-button>
-        <AddWallet :modal="modal_1" />
+        <AddWallet />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { BIconWallet2 } from 'bootstrap-vue'
 import AddWallet from '~/components/UI/Wallet/AddWallet'
 export default {
   components: {
-    BIconWallet2,
     AddWallet,
   },
 }
