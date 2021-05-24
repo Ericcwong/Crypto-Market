@@ -1,28 +1,21 @@
 <template>
   <div class="layout">
-    <Sidebar class="sidebar" />
-    <div class="content">
-      <Navbar />
-      <Nuxt />
-    </div>
+    <Navbar />
+    <Nuxt />
   </div>
 </template>
 
 <script>
 import Navbar from '~/components/UI/Navigation/Navbar'
-import Sidebar from '~/components/UI/Navigation/Sidebar'
 export default {
   components: {
     Navbar,
-    Sidebar,
   },
 }
 </script>
 
 <style scoped>
 .layout {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
   background: hsla(210, 10%, 23%, 1);
   background: linear-gradient(
     315deg,
