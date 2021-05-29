@@ -1,7 +1,7 @@
 <template>
   <section class="landing-page">
     <div class="title">
-      Crypto wallet manager
+      Crypto wallet
       <div class="icons">
         <img
           v-for="(icon, index) in icons"
@@ -11,41 +11,73 @@
           :alt="index"
         />
       </div>
+      <div
+        class="prices"
+        v-for="crypto in state.cryptos"
+        :key="crypto.cryptoName"
+      >
+        <span class="crypto-name">
+          {{ crypto.cryptoName }}
+        </span>
+        <span>${{ crypto.cryptoPrice }}</span>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
+import { reactive, ref, onMounted } from '@nuxtjs/composition-api'
+import axios from 'axios'
 export default {
   components: {},
   setup() {
+    const state = reactive({
+      cryptos: [],
+    })
+    // Saves space in the template area
     const icons = ref([
       {
         icon:
           'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@07fd63a0b662ed99c8ad870ee9227b8ef5e11630/svg/color/btc.svg',
+        ref: 'bitcoin',
       },
       {
         icon:
           'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@07fd63a0b662ed99c8ad870ee9227b8ef5e11630/svg/color/eth.svg',
+        ref: 'ethereum',
       },
       {
         icon:
           'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@07fd63a0b662ed99c8ad870ee9227b8ef5e11630/svg/color/usdt.svg',
+        ref: 'tether',
       },
       {
         icon:
           'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@07fd63a0b662ed99c8ad870ee9227b8ef5e11630/svg/color/doge.svg',
+        ref: 'dogecoin',
       },
       {
         icon:
           'https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@07fd63a0b662ed99c8ad870ee9227b8ef5e11630/svg/color/ada.svg',
+        ref: 'cardano',
       },
     ])
-    // function cryptoExtraction(item) {
-    //   return item.categories.map((icon) => icon.name)
-    // }
-    return { icons }
+
+    const getPriceAPI = async () => {
+      let data = icons.value.forEach((el) => {
+        const cryptoName = el.ref
+        axios
+          .get(
+            `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoName}&vs_currencies=usd`
+          )
+          .then((res) => {
+            let cryptoPrice = res.data[cryptoName].usd
+            state.cryptos.push({ cryptoName, cryptoPrice })
+          })
+      })
+    }
+    onMounted(getPriceAPI)
+    return { icons, getPriceAPI, state }
   },
 }
 </script>
@@ -65,7 +97,7 @@ export default {
 }
 .icons {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 .icon {
   width: 5rem;
@@ -73,6 +105,9 @@ export default {
   margin-right: 20px;
   animation-name: slideInIcons;
   animation-duration: 1s;
+}
+.crypto-name {
+  text-transform: capitalize;
 }
 /* Keyframes */
 @keyframes slideInIcons {
@@ -82,23 +117,5 @@ export default {
   to {
     transition: left 300ms linear;
   }
-  /* 0% {
-    transform: translateX(-100%);
-  } */
-  /* 20% {
-    transform: translateX(-80%);
-  }
-  40% {
-    transform: translateX(-60%);
-  }
-  60% {
-    transform: translateX(-40%);
-  }
-  80% {
-    transform: translateX(-20%);
-  } */
-  /* 100% {
-    transform: translateX(0%);
-  } */
 }
 </style>
