@@ -17,7 +17,7 @@ export default {
 <style scoped>
 .layout {
   background: hsla(210, 10%, 23%, 1);
-  background: linear-gradient(
+  /* background: linear-gradient(
     315deg,
     hsla(210, 10%, 23%, 0.7) 0%,
     hsla(210, 10%, 23%, 1) 100%
@@ -35,6 +35,6 @@ export default {
     hsla(210, 10%, 23%, 1) 100%
   );
 
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#343A40", endColorstr="#343A40", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#343A40", endColorstr="#343A40", GradientType=1 ); */
 }
 </style>
