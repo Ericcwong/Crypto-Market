@@ -5,6 +5,7 @@
       <th>Name</th>
       <th>Price</th>
       <th>24h %</th>
+      <th>7d %</th>
       <th>Market Cap</th>
       <th>Last 7 Days</th>
     </tr>
@@ -27,11 +28,21 @@
             : { color: '#FF4500' },
         ]"
       >
-        {{ crypto.market_cap_change_percentage_24h }}
+        {{ crypto.market_cap_change_percentage_24h.toFixed(2) }}%
+      </td>
+      <td
+        class="7-day-percentage"
+        :style="[
+          crypto.market_cap_change_percentage_24h >= 0
+            ? { color: '#00FF7F' }
+            : { color: '#FF4500' },
+        ]"
+      >
+        {{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}%
       </td>
       <td class="market-cap">{{ crypto.market_cap.toLocaleString() }}</td>
       <td class="chart">
-        <line-chart :chartdata="state.sevenDayChart"></line-chart>
+        <ChartContainer :crypto="cryptos" />
       </td>
     </tr>
   </table>
@@ -39,30 +50,20 @@
 
 <script>
 import axios from 'axios'
-import { onMounted, reactive } from '@nuxtjs/composition-api'
-import LineChart from './LineChart.js'
+import { onMounted, reactive, toRefs } from '@nuxtjs/composition-api'
+import LineChart from './LineChart.vue'
+import ChartContainer from './ChartContainer.vue'
 export default {
   components: {
     LineChart,
+    ChartContainer,
   },
   props: {
     cryptos: Array,
   },
-  setup() {
-    const state = reactive({
-      sevenDayChart: [],
-    })
-    const getSevenDayChart = async () => {
-      const { data } = await axios.get(
-        'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7&interval=daily'
-      )
-      const prices = data.prices
-      console.log(prices)
-      prices.forEach((el) => state.sevenDayChart.push(el))
-    }
-    onMounted(getSevenDayChart)
-    return { state }
-  },
+
+  // return { state }
+  // },
 }
 </script>
 
