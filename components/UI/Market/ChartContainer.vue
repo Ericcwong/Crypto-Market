@@ -1,45 +1,39 @@
 <template>
   <div class="container">
-    <line-chart v-if="state.loaded" :prices="state.prices" :date="state.date" />
+    <line-chart :chartData="state.dataCollections"></line-chart>
   </div>
 </template>
 
 <script>
-import LineChart from './LineChart.vue'
+import LineChart from './LineChart'
 import { onMounted, reactive } from '@nuxtjs/composition-api'
 import axios from 'axios'
 export default {
   components: { LineChart },
   props: {
-    crypto: Array,
+    crypto: String,
   },
   setup(props) {
     const state = reactive({
       loaded: false,
-      prices: null,
-      date: null,
+      dataCollections: [],
     })
     const loadDate = async () => {
-      state.loaded = false
       try {
-        // console.log(
-        props.crypto.forEach((el) => console.log(el.name))
-        //   props.crypto.forEach((el) => {
-        //     el.name
-        //   })
-        // )
-        // let { get7Days } = await axios.get(
-        //   `https://api.coingecko.com/api/v3/coins/${props.crypto.name.toLowerCase()}/market_chart?vs_currency=usd&days=7&interval=daily`
-        // )
-        // const date = await get7Days.data.prices.map((el) =>
-        //   new Date(el[0]).toLocaleDateString('en-US')
-        // )
-        // const prices = await get7Days.data.prices.map((el) =>
-        //   parseInt(el[1].toFixed(2))
-        // )
-        // state.date = date
-        // state.prices = prices
-        // state.loaded = true
+        console.log(props.crypto)
+        let get7Days = await axios.get(
+          `https://api.coingecko.com/api/v3/coins/${props.crypto}/market_chart?vs_currency=usd&days=7&interval=daily`
+        )
+        console.log(get7Days)
+        const date = await get7Days.data.prices.map((el) =>
+          state.dataCollections.push(
+            new Date(el[0]).toLocaleDateString('en-US')
+          )
+        )
+        console.log(date)
+        const prices = await get7Days.data.prices.map((el) =>
+          state.dataCollections.push(parseInt(el[1]))
+        )
       } catch (error) {
         console.log(error)
       }
@@ -50,5 +44,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
