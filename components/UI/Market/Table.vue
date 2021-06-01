@@ -51,11 +51,9 @@
 <script>
 import axios from 'axios'
 import { onMounted, reactive, toRefs } from '@nuxtjs/composition-api'
-import LineChart from './LineChart'
 import ChartContainer from './ChartContainer.vue'
 export default {
   components: {
-    LineChart,
     ChartContainer,
   },
   props: {
