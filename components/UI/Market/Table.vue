@@ -42,7 +42,7 @@
       </td>
       <td class="market-cap">{{ crypto.market_cap.toLocaleString() }}</td>
       <td class="chart">
-        <ChartContainer :crypto="cryptos" />
+        <ChartContainer :crypto="crypto.id" />
       </td>
     </tr>
   </table>
@@ -51,7 +51,7 @@
 <script>
 import axios from 'axios'
 import { onMounted, reactive, toRefs } from '@nuxtjs/composition-api'
-import LineChart from './LineChart.vue'
+import LineChart from './LineChart'
 import ChartContainer from './ChartContainer.vue'
 export default {
   components: {
@@ -61,9 +61,6 @@ export default {
   props: {
     cryptos: Array,
   },
-
-  // return { state }
-  // },
 }
 </script>
 
