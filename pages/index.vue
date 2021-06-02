@@ -3,7 +3,7 @@
     <section class="landing-page">
       <div class="title">
         Crypto wallet
-        <Table :cryptos="state.cryptos" />
+        <Table />
       </div>
     </section>
   </div>
@@ -14,33 +14,7 @@ import { reactive, ref, onMounted } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import Table from '~/components/UI/Market/Table'
 export default {
-  data() {
-    return {
-      greater: {
-        color: '#2E8B57',
-      },
-      less: {
-        color: 'red',
-      },
-    }
-  },
   components: { Table },
-  setup() {
-    const state = reactive({
-      cryptos: [],
-    })
-    const getPriceAPI = async () => {
-      await axios
-        .get(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=4&page=1&sparkline=true&price_change_percentage=7d'
-        )
-        .then((response) => {
-          response.data.forEach((element) => state.cryptos.push(element))
-        })
-    }
-    onMounted(getPriceAPI)
-    return { getPriceAPI, state }
-  },
 }
 </script>
 
