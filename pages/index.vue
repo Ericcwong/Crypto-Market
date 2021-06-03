@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <section class="landing-page">
-      <div class="title">
-        Crypto wallet
+    <section class="Home">
+      <div class="title">Cryptocurrency Prices by Market Cap</div>
+      <div class="crypto-table">
         <Table />
       </div>
     </section>
+    <v-pagination v-model="state.page" :length="6"></v-pagination>
   </div>
 </template>
 
@@ -15,27 +16,19 @@ import axios from 'axios'
 import Table from '~/components/UI/Market/Table'
 export default {
   components: { Table },
+  setup() {
+    const state = reactive({
+      loading: true,
+      page: 1,
+    })
+
+    return { state }
+  },
 }
 </script>
 
 <style scoped>
-.landing-page {
+.container {
   color: white;
-  min-height: 100vh;
-  height: 100%;
-}
-
-.title {
-  font-size: 3rem;
-}
-
-/* Keyframes */
-@keyframes slideInIcons {
-  from {
-    transition: left 300ms linear;
-  }
-  to {
-    transition: left 300ms linear;
-  }
 }
 </style>

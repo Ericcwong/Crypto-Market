@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="home-container">
     <Navbar />
     <Nuxt />
   </div>
@@ -15,8 +15,9 @@ export default {
 </script>
 
 <style scoped>
-.layout {
+.home-container {
   background: hsla(210, 10%, 23%, 1);
+  width: 100%;
   /* background: linear-gradient(
     315deg,
     hsla(210, 10%, 23%, 0.7) 0%,

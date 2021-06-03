@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="line-chart-container">
     <line-chart
-      style="width: 100%; height: 10vh"
+      style="width: 90%; height: 10vh"
       :data="crypto"
       :chartColor="colorChoice"
       :options="state.options"
@@ -22,6 +22,9 @@ export default {
     const state = reactive({
       loaded: false,
       options: {
+        animation: true,
+        animationEasing: 'easeInOutQuart',
+        animationSteps: 80,
         legend: {
           display: false,
         },
@@ -47,16 +50,16 @@ export default {
         },
       },
     })
-    console.log(props.chartColor)
     const colorChoice = parseInt(props.chartColor) >= 0 ? '#00FF7F' : '#FF4500'
-    console.log(colorChoice)
     return { state, colorChoice }
   },
 }
 </script>
 
 <style scoped>
-.container {
+.line-chart-container {
+  display: grid;
+  justify-content: center;
   height: 100%;
 }
 </style>

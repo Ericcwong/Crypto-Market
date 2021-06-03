@@ -16,7 +16,6 @@ export default {
     },
   },
   async mounted() {
-    console.log(this.chartData)
     this.renderChart(
       {
         labels: this.data,
