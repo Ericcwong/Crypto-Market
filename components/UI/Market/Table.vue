@@ -42,7 +42,10 @@
       </td>
       <td class="market-cap">{{ crypto.market_cap.toLocaleString() }}</td>
       <td class="chart">
-        <ChartContainer :crypto="crypto.sparkline_in_7d.price" />
+        <ChartContainer
+          :crypto="crypto.sparkline_in_7d.price"
+          :chartColor="crypto.price_change_percentage_7d_in_currency.toFixed(2)"
+        />
       </td>
     </tr>
   </table>
@@ -63,7 +66,7 @@ export default {
     const getPriceAPI = async () => {
       await axios
         .get(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C7d'
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C7d'
         )
         .then((response) => {
           response.data.forEach((element) => state.cryptos.push(element))
@@ -89,5 +92,8 @@ th {
 }
 .icon {
   width: 2rem;
+}
+.chart {
+  display: flex;
 }
 </style>
