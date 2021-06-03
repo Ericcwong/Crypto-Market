@@ -35,6 +35,8 @@ export default {
     // https://dev.bootstrap-vue.org/docs
     'bootstrap-vue/nuxt',
     '@nuxtjs/composition-api/module',
+    // Simple usage
+    '@nuxtjs/vuetify',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
