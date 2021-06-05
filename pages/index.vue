@@ -6,12 +6,11 @@
         <Table />
       </div>
     </section>
-    <v-pagination v-model="state.page" :length="6"></v-pagination>
   </div>
 </template>
 
 <script>
-import { reactive, ref, onMounted } from '@nuxtjs/composition-api'
+import { reactive } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import Table from '~/components/UI/Market/Table'
 export default {
