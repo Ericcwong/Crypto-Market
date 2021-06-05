@@ -22,9 +22,6 @@ export default {
     const state = reactive({
       loaded: false,
       options: {
-        animation: true,
-        animationEasing: 'easeInOutQuart',
-        animationSteps: 80,
         legend: {
           display: false,
         },
