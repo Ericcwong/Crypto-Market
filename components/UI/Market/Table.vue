@@ -15,9 +15,11 @@
           {{ crypto.market_cap_rank }}
         </td>
         <td class="name" style="text-transform: capitalize; text-align: left">
-          <img class="icon" :src="crypto.image" :alt="crypto.id" />
-          {{ crypto.id }}
-          <span style="text-transform: uppercase">{{ crypto.symbol }}</span>
+          <Nuxt-link :to="crypto.id">
+            <img class="icon" :src="crypto.image" :alt="crypto.id" />
+            {{ crypto.id }}
+            <span style="text-transform: uppercase">{{ crypto.symbol }}</span>
+          </Nuxt-link>
         </td>
         <td class="current-price">
           ${{ crypto.current_price.toLocaleString() }}
@@ -126,5 +128,8 @@ td.chart {
 }
 .chart {
   display: flex;
+}
+a {
+  color: white;
 }
 </style>
