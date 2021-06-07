@@ -8,7 +8,7 @@
         <th>24h %</th>
         <th>7d %</th>
         <th>Market Cap</th>
-        <th>Last 7 Days</th>
+        <th style="text-align: center">Last 7 Days</th>
       </tr>
       <tr v-for="crypto in state.cryptos" :key="crypto.id">
         <td class="ranking">
@@ -21,9 +21,10 @@
             <span style="text-transform: uppercase">{{ crypto.symbol }}</span>
           </Nuxt-link>
         </td>
-        <td class="current-price">
+        <td class="current-price" v-if="crypto.current_price > 0.01">
           ${{ crypto.current_price.toLocaleString() }}
         </td>
+        <td class="current-price" v-else>${{ crypto.current_price }}</td>
         <td
           class="24h-price-change-%"
           :style="[
@@ -44,7 +45,7 @@
         >
           {{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}%
         </td>
-        <td class="market-cap">{{ crypto.market_cap.toLocaleString() }}</td>
+        <td class="market-cap">${{ crypto.market_cap.toLocaleString() }}</td>
         <td class="chart" style="margin: -1px">
           <ChartContainer
             :crypto="crypto.sparkline_in_7d.price"
