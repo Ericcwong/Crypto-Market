@@ -9,7 +9,10 @@
             state.crypto.symbol.toUpperCase()
           }}</v-card-subtitle>
         </v-card-title>
-        <div>${{ state.crypto.tickers[0].last.toFixed(2) }}</div>
+        <div v-if="state.crypto.market_data.current_price.usd > 0.01">
+          ${{ state.crypto.market_data.current_price.usd.toFixed(2) }}
+        </div>
+        <div v-else>{{ state.crypto.market_data.current_price.usd }}</div>
       </div>
     </v-card>
   </div>
