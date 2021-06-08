@@ -1,6 +1,6 @@
 <template>
   <div class="market-cap-container" v-if="state.market !== null">
-    <div class="market-cap">
+    <span class="market-cap">
       Today's Cryptocurrency Market Price is: $
       {{
         parseFloat(
@@ -17,18 +17,22 @@
         {{ state.market.market_cap_change_percentage_24h_usd.toFixed(2) }}%
       </span>
       over the last day.
-    </div>
-    <div class="coins">Coins: {{ state.market.active_cryptocurrencies }}</div>
-    <div class="24h-volume">
-      <span>
+    </span>
+    <div class="market-cap-bottom-container">
+      <span class="coins"
+        >Coins: {{ state.market.active_cryptocurrencies }}</span
+      >
+
+      <span class="24h-volume">
         24h Vol: ${{
           parseFloat(state.market.total_volume.usd.toFixed(0)).toLocaleString()
         }}
       </span>
+
+      <span class="bitcoin-dominance">
+        Dominance BTC {{ state.market.market_cap_percentage.btc.toFixed(1) }}%
+      </span>
     </div>
-    <span class="bitcoin-dominance">
-      Dominance BTC {{ state.market.market_cap_percentage.btc.toFixed(1) }}%
-    </span>
   </div>
 </template>
 
@@ -57,5 +61,14 @@ export default {
 }
 .market-down {
   color: #ff4500;
+}
+.market-cap {
+  font-size: 1.75rem;
+}
+.market-cap-bottom-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid darkgray;
 }
 </style>
