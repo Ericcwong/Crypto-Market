@@ -2,8 +2,7 @@
   <div class="container">
     <section class="Home">
       <MarketCap />
-      <div class="title">Cryptocurrency Prices by Market Cap</div>
-
+      <span class="title">Cryptocurrency Prices by Market Cap</span>
       <div class="crypto-table">
         <Table />
       </div>
@@ -32,5 +31,8 @@ export default {
 <style scoped>
 .container {
   color: white;
+}
+.title {
+  font-size: 1.5rem;
 }
 </style>
