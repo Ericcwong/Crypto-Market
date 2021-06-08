@@ -133,4 +133,7 @@ td.chart {
 a {
   color: white;
 }
+/* Media Queries */
+@media screen and (max-width: 950px) {
+}
 </style>
