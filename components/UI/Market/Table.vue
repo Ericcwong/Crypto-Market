@@ -1,66 +1,78 @@
 <template>
-  <div class="">
-    <table class="sortable">
-      <tr>
-        <th>Ranking</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>24h %</th>
-        <th>7d %</th>
-        <th>Market Cap</th>
-        <th style="text-align: center">Last 7 Days</th>
-      </tr>
-      <tr v-for="crypto in state.cryptos" :key="crypto.id">
-        <td class="ranking">
-          {{ crypto.market_cap_rank }}
-        </td>
-        <td class="name" style="text-transform: capitalize; text-align: left">
-          <Nuxt-link :to="crypto.id">
-            <img class="icon" :src="crypto.image" :alt="crypto.id" />
-            {{ crypto.id }}
-            <span style="text-transform: uppercase">{{ crypto.symbol }}</span>
-          </Nuxt-link>
-        </td>
-        <td class="current-price" v-if="crypto.current_price > 0.01">
-          ${{ crypto.current_price.toLocaleString() }}
-        </td>
-        <td class="current-price" v-else>${{ crypto.current_price }}</td>
-        <td
-          class="24h-price-change-%"
-          :style="[
-            crypto.price_change_percentage_24h >= 0
-              ? { color: '#00FF7F' }
-              : { color: '#FF4500' },
-          ]"
-        >
-          {{ crypto.price_change_percentage_24h.toFixed(2) }}%
-        </td>
-        <td
-          class="7-day-percentage"
-          :style="[
-            crypto.price_change_percentage_7d_in_currency >= 0
-              ? { color: '#00FF7F' }
-              : { color: '#FF4500' },
-          ]"
-        >
-          {{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}%
-        </td>
-        <td class="market-cap">${{ crypto.market_cap.toLocaleString() }}</td>
-        <td class="chart" style="margin: -1px">
+  <div>
+    <v-card
+      elevation="4"
+      outlined
+      tile
+      v-for="crypto in state.cryptos"
+      :key="crypto.id"
+    >
+      <div class="crypto-data">
+        <div class="crypto-rank">
+          <v-card-subtitle>Rank:</v-card-subtitle>
+          <v-card-title>{{ crypto.market_cap_rank }}</v-card-title>
+        </div>
+        <div class="crypto-name">
+          <v-card-subtitle>Name:</v-card-subtitle>
+
+          <v-card-title>
+            <img
+              style="width: 2rem"
+              :src="crypto.image"
+              :alt="crypto.id + ' icon'"
+            />&nbsp; {{ crypto.name }} &nbsp;
+            <small> {{ crypto.symbol.toUpperCase() }}</small>
+          </v-card-title>
+        </div>
+        <div class="crypto-price">
+          <v-card-subtitle>Price:</v-card-subtitle>
+          <v-card-title
+            >${{ parseFloat(crypto.current_price.toFixed(3)).toLocaleString() }}
+          </v-card-title>
+        </div>
+        <div class="crypto-24h">
+          <v-card-subtitle>24h %</v-card-subtitle>
+          <v-card-title
+            :style="[
+              crypto.price_change_percentage_24h >= 0.0
+                ? { color: '#00FF7F' }
+                : { color: '#FF4500' },
+            ]"
+            >{{ crypto.price_change_percentage_24h }}%
+          </v-card-title>
+        </div>
+        <div class="crypto-7d">
+          <v-card-subtitle>7d %</v-card-subtitle>
+          <v-card-title
+            :style="[
+              crypto.price_change_percentage_7d_in_currency >= 0.0
+                ? { color: '#00FF7F' }
+                : { color: '#FF4500' },
+            ]"
+            >{{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}
+          </v-card-title>
+        </div>
+        <div class="crypto-market-cap">
+          <v-card-subtitle>Market Cap:</v-card-subtitle>
+          <v-card-title>${{ crypto.market_cap.toLocaleString() }}</v-card-title>
+        </div>
+        <div class="crypto-chart">
+          <v-card-subtitle>Last 7 days</v-card-subtitle>
+          <!-- <v-card-title> -->
           <ChartContainer
             :crypto="crypto.sparkline_in_7d.price"
             :chartColor="
               crypto.price_change_percentage_7d_in_currency.toFixed(2)
             "
           />
-        </td>
-      </tr>
-      <div
-        v-if="state.cryptos.length"
-        v-observe-visibility="handleScrolledToBottom"
-      ></div>
-    </table>
-    <v-pagination v-model="state.page" :length="6"></v-pagination>
+          <!-- </v-card-title> -->
+        </div>
+        <div
+          v-if="state.cryptos.length"
+          v-observe-visibility="handleScrolledToBottom"
+        ></div>
+      </div>
+    </v-card>
   </div>
 </template>
 
@@ -106,34 +118,52 @@ export default {
 </script>
 
 <style scoped>
-table {
-  width: 100%;
-  border: 1px solid white;
-  font-size: 1rem;
-}
-
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-td {
-  border-bottom: 2px solid #dddddd;
-  text-align: center;
-}
-td.chart {
-  justify-content: center;
-}
-.icon {
-  width: 2rem;
-}
-.chart {
+.crypto-data {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-a {
-  color: white;
+.crypto-rank {
+  grid-area: rank;
 }
-/* Media Queries */
-@media screen and (max-width: 950px) {
+.crypto-name {
+  grid-area: name;
+}
+.crypto-price {
+  grid-area: price;
+}
+.crypto-24h {
+  grid-area: 24h;
+}
+.crypto-7d {
+  grid-area: 7d;
+}
+.crypto-market-cap {
+  grid-area: market-cap;
+}
+.crypto-chart {
+  /* width: 100%; */
+  grid-area: chart;
+}
+@media only screen and (max-width: 1260px) {
+  .crypto-data {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'rank name price'
+      '24h 7d market-cap'
+      'chart chart chart';
+  }
+}
+@media only screen and (max-width: 630px) {
+  .crypto-data {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'rank name'
+      'price market-cap'
+      '24h 7d'
+      'chart chart';
+  }
 }
 </style>
