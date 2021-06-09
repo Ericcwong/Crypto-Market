@@ -54,9 +54,12 @@ export default {
 </script>
 
 <style scoped>
-.line-chart-container {
-  display: grid;
-  justify-content: center;
-  height: 100%;
-}
+/* @media only screen and (min-width: 1260px) {
+  .line-chart-container {
+    display: grid;
+    justify-content: center;
+    width: 90%;
+    height: 10vh;
+  }
+} */
 </style>
