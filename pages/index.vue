@@ -1,6 +1,19 @@
 <template>
   <div class="container">
     <section class="Home">
+      <v-btn
+        v-scroll="onScroll"
+        v-show="state.fab"
+        fab
+        dark
+        fixed
+        bottom
+        right
+        color="primary"
+        @click="toTop"
+      >
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
       <MarketCap />
       <span class="title">Cryptocurrency Prices by Market Cap</span>
       <div class="crypto-table">
@@ -21,9 +34,18 @@ export default {
     const state = reactive({
       loading: true,
       page: 1,
+      fab: false,
     })
+    function onScroll(e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset || e.target.scrollTop || 0
+      state.fab = top > 20
+    }
 
-    return { state }
+    function toTop() {
+      this.$vuetify.goTo(0)
+    }
+    return { state, onScroll, toTop }
   },
 }
 </script>
