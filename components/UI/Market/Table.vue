@@ -119,9 +119,9 @@ export default {
 
 <style scoped>
 .crypto-data {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 10% 15% 15% 10% 10% 15% 25%;
+  grid-template-areas: 'rank name price 24h 7d market-cap chart';
 }
 .crypto-rank {
   grid-area: rank;
