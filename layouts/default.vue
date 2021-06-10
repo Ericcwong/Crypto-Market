@@ -1,8 +1,8 @@
 <template>
-  <div class="home-container">
+  <v-app class="home-container">
     <Navbar />
     <Nuxt />
-  </div>
+  </v-app>
 </template>
 
 <script>
