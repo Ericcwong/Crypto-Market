@@ -1,8 +1,7 @@
 <template>
   <div class="market-cap-container" v-if="state.market !== null">
     <span class="market-cap">
-      Today's Cryptocurrency Market Price is: $
-      {{
+      Today's Cryptocurrency Market Price is: ${{
         parseFloat(
           state.market.total_market_cap.usd.toFixed(2)
         ).toLocaleString()
