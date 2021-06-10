@@ -14,21 +14,23 @@
         </div>
         <div class="crypto-name">
           <v-card-subtitle>Name:</v-card-subtitle>
-
-          <v-card-title>
-            <img
-              style="width: 2rem"
-              :src="crypto.image"
-              :alt="crypto.id + ' icon'"
-            />&nbsp; {{ crypto.name }} &nbsp;
-            <small> {{ crypto.symbol.toUpperCase() }}</small>
-          </v-card-title>
+          <Nuxt-link :to="crypto.id">
+            <v-card-title style="color: white">
+              <img
+                style="width: 2rem"
+                :src="crypto.image"
+                :alt="crypto.id + ' icon'"
+              />&nbsp; {{ crypto.name }} &nbsp;
+              <small> {{ crypto.symbol.toUpperCase() }}</small>
+            </v-card-title>
+          </Nuxt-link>
         </div>
         <div class="crypto-price">
           <v-card-subtitle>Price:</v-card-subtitle>
-          <v-card-title
+          <v-card-title v-if="crypto.current_price > 0.01"
             >${{ parseFloat(crypto.current_price.toFixed(3)).toLocaleString() }}
           </v-card-title>
+          <v-card-title v-else>${{ crypto.current_price }}</v-card-title>
         </div>
         <div class="crypto-24h">
           <v-card-subtitle>24h %</v-card-subtitle>
@@ -38,7 +40,7 @@
                 ? { color: '#00FF7F' }
                 : { color: '#FF4500' },
             ]"
-            >{{ crypto.price_change_percentage_24h }}%
+            >{{ crypto.price_change_percentage_24h.toFixed(2) }}%
           </v-card-title>
         </div>
         <div class="crypto-7d">
@@ -123,6 +125,9 @@ export default {
   grid-template-columns: 10% 15% 15% 10% 10% 15% 25%;
   grid-template-areas: 'rank name price 24h 7d market-cap chart';
 }
+a {
+  color: white;
+}
 .crypto-rank {
   grid-area: rank;
 }
@@ -145,7 +150,7 @@ export default {
   /* width: 100%; */
   grid-area: chart;
 }
-@media only screen and (max-width: 1260px) {
+/* @media only screen and (max-width: 1260px) {
   .crypto-data {
     display: grid;
     grid-template-rows: auto;
@@ -154,14 +159,16 @@ export default {
       '24h 7d market-cap'
       'chart chart chart';
   }
-}
+} */
 @media only screen and (max-width: 630px) {
   .crypto-data {
     display: grid;
     grid-template-rows: auto;
+    grid-template-columns: 50% 50%;
+
     grid-template-areas:
-      'rank name'
-      'price market-cap'
+      'name rank'
+      'price market-cap '
       '24h 7d'
       'chart chart';
   }
