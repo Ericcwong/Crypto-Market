@@ -25,8 +25,10 @@ export default {
   css: ['~/assets/style.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [  '~/plugins/vue-placeholders.js',
-  '~/plugins/vue-observe-visibility.client.js'],
+  plugins: [
+    '~/plugins/vue-placeholders.js',
+    '~/plugins/vue-observe-visibility.client.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,7 +41,24 @@ export default {
     // Simple usage
     '@nuxtjs/vuetify',
   ],
-
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          background: '#c5ccd3',
+          primary: colors.blue.darken2,
+          accent: colors.grey.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3,
+        },
+      },
+    },
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
