@@ -63,9 +63,7 @@
           <!-- <v-card-title> -->
           <ChartContainer
             :crypto="crypto.sparkline_in_7d.price"
-            :chartColor="
-              crypto.price_change_percentage_7d_in_currency.toFixed(2)
-            "
+            :chartColor="crypto.price_change_percentage_7d_in_currency"
           />
           <!-- </v-card-title> -->
         </div>
