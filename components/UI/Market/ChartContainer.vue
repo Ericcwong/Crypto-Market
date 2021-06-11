@@ -16,7 +16,7 @@ export default {
   components: { LineChart },
   props: {
     crypto: { type: Array, default: null },
-    chartColor: { type: String, default: null }, //Changes the chart color depending on the 7 day percentage number
+    chartColor: { type: Number, default: null }, //Changes the chart color depending on the 7 day percentage number
   },
   setup(props) {
     const state = reactive({
@@ -47,8 +47,7 @@ export default {
         },
       },
     })
-    const colorChoice =
-      parseInt(props.chartColor) >= 0.01 ? '#00FF7F' : '#FF4500'
+    const colorChoice = props.chartColor >= 0.01 ? '#00FF7F' : '#FF4500'
     return { state, colorChoice }
   },
 }
