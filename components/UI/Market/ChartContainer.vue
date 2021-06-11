@@ -47,7 +47,8 @@ export default {
         },
       },
     })
-    const colorChoice = parseInt(props.chartColor) >= 0 ? '#00FF7F' : '#FF4500'
+    const colorChoice =
+      parseInt(props.chartColor) >= 0.01 ? '#00FF7F' : '#FF4500'
     return { state, colorChoice }
   },
 }
