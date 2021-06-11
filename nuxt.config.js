@@ -1,11 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  ssr: false,
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - crypto-wallet',
-    title: 'crypto-wallet',
+    titleTemplate: 'Crypto Market %s',
+    title: 'crypto-market',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
