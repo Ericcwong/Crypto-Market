@@ -22,18 +22,36 @@
 import { reactive, onMounted, useRoute } from '@nuxtjs/composition-api'
 import axios from 'axios'
 export default {
+  head(state) {
+    return {
+      title: `- ${state.state.cryptoName}`,
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'My custom description',
+        },
+      ],
+    }
+  },
+
   setup() {
     const route = useRoute()
     const state = reactive({
       crypto: null,
+      cryptoName: null,
     })
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
+
+      // console.log(state.cryptoName)
       await axios
         .get(`https://api.coingecko.com/api/v3/coins/${cryptoName}`)
         .then((res) => {
-          console.log(res.data)
+          console.log(res.data.name)
           state.crypto = res.data
+          state.cryptoName = res.data.name
         })
     }
     onMounted(getCryptoAPI)
