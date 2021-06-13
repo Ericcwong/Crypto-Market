@@ -28,6 +28,7 @@ export default {
   plugins: [
     '~/plugins/vue-placeholders.js',
     '~/plugins/vue-observe-visibility.client.js',
+    '~/plugins/vue-linkify.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
