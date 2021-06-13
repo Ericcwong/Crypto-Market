@@ -4,8 +4,8 @@
       elevation="4"
       outlined
       tile
-      v-for="crypto in state.cryptos"
-      :key="crypto.id"
+      v-for="(crypto, index) in state.cryptos"
+      :key="index"
     >
       <div class="crypto-data">
         <div class="crypto-rank">
@@ -60,59 +60,58 @@
         </div>
         <div class="crypto-chart">
           <v-card-subtitle>Last 7 days</v-card-subtitle>
-          <!-- <v-card-title> -->
-          <ChartContainer
-            :crypto="crypto.sparkline_in_7d.price"
-            :chartColor="crypto.price_change_percentage_7d_in_currency"
-          />
-          <!-- </v-card-title> -->
+          <v-sparkline
+            :value="crypto.sparkline_in_7d.price"
+            :color="redOrGreen(crypto.price_change_percentage_7d_in_currency)"
+            :auto-draw-duration="3000"
+            line-width="2"
+            auto-draw
+          ></v-sparkline>
         </div>
-        <div
-          v-if="state.cryptos.length"
-          v-observe-visibility="handleScrolledToBottom"
-        ></div>
       </div>
     </v-card>
+    <div
+      v-if="state.cryptos.length"
+      v-observe-visibility="handleScrolledToBottom"
+    ></div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { onBeforeMount, reactive } from '@nuxtjs/composition-api'
-import ChartContainer from './ChartContainer'
 export default {
-  components: {
-    ChartContainer,
-  },
   setup() {
     const state = reactive({
       cryptos: [],
-      loaded: 20,
+      loaded: 100,
       page: 1,
     })
+    // Main API data call
     const getPriceAPI = async () => {
       let response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${state.loaded}&page=${state.page}&sparkline=true&price_change_percentage=1h%2C7d`
       )
-      let data = await response.data
-      let uniqueCrypto = await [...new Set(response.data)]
-      console.log(uniqueCrypto)
-      state.cryptos = []
-      state.cryptos.push(...uniqueCrypto)
+      state.cryptos.push(...response.data)
+    }
+    // Chart color
+    const redOrGreen = (data) => {
+      if (data >= 0.0) {
+        return '#00FF7F'
+      } else {
+        return '#FF4500'
+      }
     }
     onBeforeMount(getPriceAPI)
     function handleScrolledToBottom(isVisible) {
       if (!isVisible) {
         return
-      }
-      if (state.loaded !== 100) {
-        state.loaded = state.loaded + 20
+      } else if (state.loaded !== 100) {
+        state.loaded += 20
         getPriceAPI()
-      } else {
-        return
       }
     }
-    return { getPriceAPI, state, handleScrolledToBottom }
+    return { getPriceAPI, state, handleScrolledToBottom, redOrGreen }
   },
 }
 </script>
