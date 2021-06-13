@@ -14,6 +14,9 @@
         </div>
         <div v-else>{{ state.crypto.market_data.current_price.usd }}</div>
       </div>
+      <div class="bottom-card-container">
+        <p class="description" v-html="state.cryptoDescription" v-linkified></p>
+      </div>
     </v-card>
   </div>
 </template>
@@ -22,25 +25,26 @@
 import { reactive, onMounted, useRoute } from '@nuxtjs/composition-api'
 import axios from 'axios'
 export default {
+  // head(): handles browser tab information
   head(state) {
     return {
       title: `- ${state.state.cryptoName}`,
-      meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'My custom description',
-        },
-      ],
+      // meta: [
+      //   // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+      //   {
+      //     hid: 'description',
+      //     name: 'description',
+      //     content: 'My custom description',
+      //   },
+      // ],
     }
   },
-
   setup() {
     const route = useRoute()
     const state = reactive({
       crypto: null,
       cryptoName: null,
+      cryptoDescription: {},
     })
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
@@ -49,11 +53,13 @@ export default {
       await axios
         .get(`https://api.coingecko.com/api/v3/coins/${cryptoName}`)
         .then((res) => {
-          console.log(res.data.name)
+          console.log(res.data)
           state.crypto = res.data
           state.cryptoName = res.data.name
+          state.cryptoDescription = res.data.description.en
         })
     }
+
     onMounted(getCryptoAPI)
     return { state }
   },
