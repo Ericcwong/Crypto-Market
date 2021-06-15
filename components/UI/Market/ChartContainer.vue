@@ -1,10 +1,6 @@
 <template>
   <div class="line-chart-container">
-    <line-chart
-      style="width: 90%; height: 10vh"
-      :data="crypto"
-      :options="state.options"
-    ></line-chart>
+    <line-chart :data="crypto" :options="state.options"></line-chart>
   </div>
 </template>
 
@@ -17,35 +13,37 @@ export default {
     crypto: { type: Array, default: null },
     chartColor: { type: Number, default: null }, //Changes the chart color depending on the 7 day percentage number
   },
+
   setup(props) {
     const state = reactive({
-      // loaded: false,
+      loaded: false,
       options: {
-        // legend: {
-        // display: false,
-        // },
+        //Display the name of the graph
+        legend: {
+          display: false,
+        },
+        //When user hover over the graph it will stick to the x-axis.
+        tooltips: {
+          intersect: false,
+          mode: 'x-axis',
+        },
         responsive: true,
-        // maintainAspectRatio: false,
-        // showTooltips: false,
+        maintainAspectRatio: false,
         elements: {
           point: {
-            radius: 0,
+            radius: 1,
           },
         },
-        //   scales: {
-        //     xAxes: [
-        //       {
-        //         display: false, //this will remove all the x-axis grid lines
-        //       },
-        //     ],
-        //     yAxes: [
-        //       {
-        //         display: false, //this will remove all the y-axis grid lines
-        //       },
-        //     ],
-        //   },
+        scales: {
+          xAxes: [
+            {
+              display: false, //this will remove all the x-axis grid lines
+            },
+          ],
+        },
       },
     })
+
     const colorChoice = props.chartColor >= 0.01 ? '#00FF7F' : '#FF4500'
     return { state, colorChoice }
   },
