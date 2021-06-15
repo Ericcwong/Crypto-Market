@@ -92,7 +92,9 @@ export default {
       let response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${state.loaded}&page=${state.page}&sparkline=true&price_change_percentage=1h%2C7d`
       )
+
       state.cryptos.push(...response.data)
+      console.log(state.cryptos)
     }
     // Chart color
     const redOrGreen = (data) => {
