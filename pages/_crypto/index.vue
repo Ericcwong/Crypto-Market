@@ -57,7 +57,7 @@ export default {
       crypto: null,
       cryptoName: null,
       cryptoDescription: {},
-      sparkline: null,
+      sparkline: [],
     })
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
@@ -73,8 +73,9 @@ export default {
       state.cryptoName = response.data.name
       state.cryptoDescription = response.data.description.en
 
-      state.sparkline = sparklineData.data.prices
-      // console.log(state.sparkline)
+      sparklineData.data.prices.map((element) => {
+        state.sparkline.push(element[1])
+      })
     }
 
     onMounted(getCryptoAPI)
@@ -85,11 +86,17 @@ export default {
 
 <style scoped>
 .container {
+  display: grid;
+
+  height: 100vh;
   color: white;
 }
 .top-card-container {
   display: flex;
   justify-content: space-between;
+}
+.middle-card-container {
+  /* height: 30vh; */
 }
 .name,
 .price {
