@@ -4,15 +4,23 @@
       <div class="top-card-container">
         <v-card-title>
           <img :src="state.crypto.image.thumb" alt="Thumbnail" />
-          {{ state.crypto.name }}
+          <span class="name">{{ state.crypto.name }}</span>
           <v-card-subtitle>{{
             state.crypto.symbol.toUpperCase()
           }}</v-card-subtitle>
         </v-card-title>
-        <div v-if="state.crypto.market_data.current_price.usd > 0.01">
+        <span
+          class="price"
+          v-if="state.crypto.market_data.current_price.usd > 0.01"
+        >
           ${{ state.crypto.market_data.current_price.usd.toFixed(2) }}
-        </div>
-        <div v-else>{{ state.crypto.market_data.current_price.usd }}</div>
+        </span>
+        <span class="price" v-else>{{
+          state.crypto.market_data.current_price.usd
+        }}</span>
+      </div>
+      <div class="middle-card-container">
+        <ChartContainer :crypto="state.sparkline" />
       </div>
       <div class="bottom-card-container">
         <p class="description" v-html="state.cryptoDescription" v-linkified></p>
@@ -24,7 +32,11 @@
 <script>
 import { reactive, onMounted, useRoute } from '@nuxtjs/composition-api'
 import axios from 'axios'
+import ChartContainer from '~/components/UI/Market/ChartContainer.vue'
 export default {
+  components: {
+    ChartContainer,
+  },
   // head(): handles browser tab information
   head(state) {
     return {
@@ -45,19 +57,24 @@ export default {
       crypto: null,
       cryptoName: null,
       cryptoDescription: {},
+      sparkline: null,
     })
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
 
       // console.log(state.cryptoName)
-      await axios
-        .get(`https://api.coingecko.com/api/v3/coins/${cryptoName}`)
-        .then((res) => {
-          console.log(res.data)
-          state.crypto = res.data
-          state.cryptoName = res.data.name
-          state.cryptoDescription = res.data.description.en
-        })
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${cryptoName}`
+      )
+      const sparklineData = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${cryptoName}/market_chart?vs_currency=usd&days=1`
+      )
+      state.crypto = response.data
+      state.cryptoName = response.data.name
+      state.cryptoDescription = response.data.description.en
+
+      state.sparkline = sparklineData.data.prices
+      // console.log(state.sparkline)
     }
 
     onMounted(getCryptoAPI)
@@ -73,5 +90,9 @@ export default {
 .top-card-container {
   display: flex;
   justify-content: space-between;
+}
+.name,
+.price {
+  font-size: 3rem;
 }
 </style>

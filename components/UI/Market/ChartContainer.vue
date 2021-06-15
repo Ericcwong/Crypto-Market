@@ -3,7 +3,6 @@
     <line-chart
       style="width: 90%; height: 10vh"
       :data="crypto"
-      :chartColor="colorChoice"
       :options="state.options"
     ></line-chart>
   </div>
@@ -20,31 +19,31 @@ export default {
   },
   setup(props) {
     const state = reactive({
-      loaded: false,
+      // loaded: false,
       options: {
-        legend: {
-          display: false,
-        },
+        // legend: {
+        // display: false,
+        // },
         responsive: true,
-        maintainAspectRatio: false,
-        showTooltips: false,
+        // maintainAspectRatio: false,
+        // showTooltips: false,
         elements: {
           point: {
             radius: 0,
           },
         },
-        scales: {
-          xAxes: [
-            {
-              display: false, //this will remove all the x-axis grid lines
-            },
-          ],
-          yAxes: [
-            {
-              display: false, //this will remove all the y-axis grid lines
-            },
-          ],
-        },
+        //   scales: {
+        //     xAxes: [
+        //       {
+        //         display: false, //this will remove all the x-axis grid lines
+        //       },
+        //     ],
+        //     yAxes: [
+        //       {
+        //         display: false, //this will remove all the y-axis grid lines
+        //       },
+        //     ],
+        //   },
       },
     })
     const colorChoice = props.chartColor >= 0.01 ? '#00FF7F' : '#FF4500'

@@ -22,7 +22,7 @@ export default {
         datasets: [
           {
             data: this.data,
-            borderColor: this.chartColor,
+            // borderColor: this.chartColor,
             fill: false,
           },
         ],
