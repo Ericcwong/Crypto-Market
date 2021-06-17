@@ -2,6 +2,7 @@
   <div class="container">
     <v-card elevation="2" v-if="state.crypto !== null">
       <div class="top-card-container">
+        <span class="ranking">Rank {{ state.crypto.coingecko_rank }}</span>
         <v-card-title>
           <img :src="state.crypto.image.thumb" alt="Thumbnail" />
           <span class="name">{{ state.crypto.name }}</span>
@@ -21,6 +22,20 @@
       </div>
       <div class="middle-card-container">
         <ChartContainer :crypto="state.sparkline" />
+        <v-card-text>
+          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(1)">
+            <v-icon left>mdi-alarm-check </v-icon>
+            1 Day
+          </v-chip>
+          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(7)">
+            <v-icon left>mdi-alarm-check </v-icon>
+            7 Day
+          </v-chip>
+          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(30)">
+            <v-icon left>mdi-alarm-check </v-icon>
+            1 Month
+          </v-chip>
+        </v-card-text>
       </div>
       <div class="bottom-card-container">
         <p class="description" v-html="state.cryptoDescription" v-linkified></p>
@@ -72,14 +87,24 @@ export default {
       state.crypto = response.data
       state.cryptoName = response.data.name
       state.cryptoDescription = response.data.description.en
+      console.log(response.data)
 
+      sparklineData.data.prices.map((element) => {
+        state.sparkline.push(element[1])
+      })
+    }
+    const getSparklineDay = async (data) => {
+      const sparklineData = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${state.cryptoName.toLowerCase()}/market_chart?vs_currency=usd&days=${data}`
+      )
+      console.log(sparklineData.data.prices)
       sparklineData.data.prices.map((element) => {
         state.sparkline.push(element[1])
       })
     }
 
     onMounted(getCryptoAPI)
-    return { state }
+    return { state, getSparklineDay }
   },
 }
 </script>

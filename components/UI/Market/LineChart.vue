@@ -1,13 +1,14 @@
 <script>
-import { Line } from 'vue-chartjs'
-
+import { Line, mixins } from 'vue-chartjs'
+const { reactiveProp } = mixins
 export default {
   extends: Line,
+  mixins: [reactiveProp],
   props: {
-    data: {
-      type: Array,
-      default: null,
-    },
+    // data: {
+    //   type: Array,
+    //   default: null,
+    // },
     chartColor: {
       type: String,
     },
@@ -47,19 +48,7 @@ export default {
         }
       },
     })
-    this.renderChart(
-      {
-        labels: this.data,
-        datasets: [
-          {
-            data: this.data,
-            borderColor: 'lightblue',
-            fill: false,
-          },
-        ],
-      },
-      this.options
-    )
+    this.renderChart(this.chartData, this.options)
   },
 }
 </script>

@@ -1,12 +1,15 @@
 <template>
   <div class="line-chart-container">
-    <line-chart :data="crypto" :options="state.options"></line-chart>
+    <line-chart
+      :chart-data="state.chartData"
+      :options="state.options"
+    ></line-chart>
   </div>
 </template>
 
 <script>
 import LineChart from './LineChart.vue'
-import { onMounted, reactive } from '@nuxtjs/composition-api'
+import { toRefs, reactive } from '@nuxtjs/composition-api'
 export default {
   components: { LineChart },
   props: {
@@ -15,6 +18,8 @@ export default {
   },
 
   setup(props) {
+    let cryptoRef = toRefs(props).crypto
+    console.log(cryptoRef.value)
     const state = reactive({
       loaded: false,
       options: {
@@ -42,10 +47,20 @@ export default {
           ],
         },
       },
+      chartData: {
+        labels: cryptoRef.value,
+        datasets: [
+          {
+            label: 'Price: $',
+            data: cryptoRef.value,
+            borderColor: 'lightblue',
+            fill: false,
+          },
+        ],
+      },
     })
 
-    const colorChoice = props.chartColor >= 0.01 ? '#00FF7F' : '#FF4500'
-    return { state, colorChoice }
+    return { state, cryptoRef }
   },
 }
 </script>
