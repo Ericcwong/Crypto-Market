@@ -1,23 +1,11 @@
 <script>
 import { Line, mixins } from 'vue-chartjs'
-const { reactiveProp } = mixins
 export default {
   extends: Line,
-  mixins: [reactiveProp],
-  props: {
-    // data: {
-    //   type: Array,
-    //   default: null,
-    // },
-    chartColor: {
-      type: String,
-    },
-    options: {
-      type: Object,
-      default: null,
-    },
-  },
-  async mounted() {
+  mixins: [mixins.reactiveProp],
+  props: ['options'],
+  mounted() {
+    console.log(this.chartData)
     //Handles the vertical line that appears when the user hovers over the graph
     this.$refs.canvas.getContext('2d')
     // new Chart(ctx, config);
