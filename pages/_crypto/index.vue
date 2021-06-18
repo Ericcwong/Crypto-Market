@@ -21,7 +21,11 @@
         }}</span>
       </div>
       <div class="middle-card-container">
-        <ChartContainer :crypto="state.sparkline" />
+        <ChartContainer
+          v-if="state.dataLoaded"
+          :date="state.sparklineDate"
+          :price="state.sparklinePrice"
+        />
         <v-card-text>
           <v-chip class="mr-2" ref="1d" @click="getSparklineDay(1)">
             <v-icon left>mdi-alarm-check </v-icon>
@@ -45,7 +49,7 @@
 </template>
 
 <script>
-import { reactive, onMounted, useRoute } from '@nuxtjs/composition-api'
+import { reactive, onBeforeMount, useRoute } from '@nuxtjs/composition-api'
 import axios from 'axios'
 import ChartContainer from '~/components/UI/Market/ChartContainer.vue'
 export default {
@@ -72,38 +76,37 @@ export default {
       crypto: null,
       cryptoName: null,
       cryptoDescription: {},
-      sparkline: [],
+      dataLoaded: false,
+      sparklineDate: [],
+      sparklinePrice: [],
     })
+    // API data call when crypto is clicked on
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
-
       // console.log(state.cryptoName)
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${cryptoName}`
       )
-      const sparklineData = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${cryptoName}/market_chart?vs_currency=usd&days=1`
-      )
       state.crypto = response.data
       state.cryptoName = response.data.name
       state.cryptoDescription = response.data.description.en
-      console.log(response.data)
-
-      sparklineData.data.prices.map((element) => {
-        state.sparkline.push(element[1])
-      })
+      getSparklineDay(1)
     }
     const getSparklineDay = async (data) => {
+      state.sparklineDate = []
+      state.sparklinePrice = []
+      state.dataLoaded = false
       const sparklineData = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${state.cryptoName.toLowerCase()}/market_chart?vs_currency=usd&days=${data}`
       )
-      console.log(sparklineData.data.prices)
-      sparklineData.data.prices.map((element) => {
-        state.sparkline.push(element[1])
+      sparklineData.data.prices.map((el) => {
+        state.sparklineDate.push(new Date(el[0]).toLocaleDateString())
+        state.sparklinePrice.push(el[1])
       })
+      // console.log(state.sparklinePrice)
+      state.dataLoaded = true
     }
-
-    onMounted(getCryptoAPI)
+    onBeforeMount(getCryptoAPI)
     return { state, getSparklineDay }
   },
 }
