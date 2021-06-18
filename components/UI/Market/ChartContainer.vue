@@ -1,7 +1,7 @@
 <template>
   <div class="line-chart-container">
     <line-chart
-      :chart-data="state.chartData"
+      :chartData="state.chartData"
       :options="state.options"
     ></line-chart>
   </div>
@@ -13,13 +13,16 @@ import { toRefs, reactive } from '@nuxtjs/composition-api'
 export default {
   components: { LineChart },
   props: {
-    crypto: { type: Array, default: null },
+    date: { type: Array },
+    price: { type: Array },
     chartColor: { type: Number, default: null }, //Changes the chart color depending on the 7 day percentage number
   },
 
   setup(props) {
-    let cryptoRef = toRefs(props).crypto
-    console.log(cryptoRef.value)
+    let date = props.date
+    let price = props.price
+    console.log('Date: ', props.date)
+    console.log('Price: ', props.price)
     const state = reactive({
       loaded: false,
       options: {
@@ -39,20 +42,20 @@ export default {
             radius: 1,
           },
         },
-        scales: {
-          xAxes: [
-            {
-              display: false, //this will remove all the x-axis grid lines
-            },
-          ],
-        },
+        // scales: {
+        //   xAxes: [
+        //     {
+        //       display: false, //this will remove all the x-axis grid lines
+        //     },
+        //   ],
+        // },
       },
       chartData: {
-        labels: cryptoRef.value,
+        labels: date,
         datasets: [
           {
             label: 'Price: $',
-            data: cryptoRef.value,
+            data: price,
             borderColor: 'lightblue',
             fill: false,
           },
@@ -60,7 +63,7 @@ export default {
       },
     })
 
-    return { state, cryptoRef }
+    return { state }
   },
 }
 </script>
