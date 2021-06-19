@@ -136,14 +136,17 @@ export default {
         'December',
       ]
       const today = new Date(data)
-      let hour = today.getHours()
-      let minute = today.getMinutes()
-      let seconds = today.getMinutes()
+      let hours = today.getHours()
+      let minutes = today.getMinutes()
+      let ampm = hours >= 12 ? 'pm' : 'am'
+      hours = hours % 12
+      hours = hours ? hours : 12 // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0' + minutes : minutes
       let dayName = days[today.getDay()]
       let monthName = months[today.getMonth() + 1]
       let date = `
-      ${dayName}${', '}${monthName} ${today.getDate()}th, ${today.getFullYear()} ${hour}:${minute}:${seconds} `
-      console.log(date)
+      ${dayName}${', '}${monthName} ${today.getDate()}th, ${today.getFullYear()} ${hours}:${minutes}${ampm} `
+      let calendarDate = `${today.getDate()}.${monthName.substring(0, 3)}`
       return date
     }
     const getSparklineDay = async (data) => {
@@ -165,7 +168,10 @@ export default {
           console.log(state.sparklineDate)
           break
         case '7 Days':
-          console.log('7 Days')
+          sparklineData.data.prices.map((el) => {
+            state.sparklineDate.push(dateConverter(el[0]))
+            state.sparklinePrice.push(el[1])
+          })
           break
         case '30 Days':
           sparklineData.data.prices.map((el) => {
