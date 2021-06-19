@@ -21,8 +21,6 @@ export default {
   setup(props) {
     let date = props.date
     let price = props.price
-    console.log('Date: ', props.date)
-    console.log('Price: ', props.price)
     const state = reactive({
       loaded: false,
       options: {
@@ -42,13 +40,13 @@ export default {
             radius: 1,
           },
         },
-        // scales: {
-        //   xAxes: [
-        //     {
-        //       display: false, //this will remove all the x-axis grid lines
-        //     },
-        //   ],
-        // },
+        scales: {
+          xAxes: [
+            {
+              display: false, //this will remove all the x-axis grid lines
+            },
+          ],
+        },
       },
       chartData: {
         labels: date,
