@@ -21,21 +21,40 @@
         }}</span>
       </div>
       <div class="middle-card-container">
+        <span class="chart-title">{{ state.chartTitle }}</span>
         <ChartContainer
           v-if="state.dataLoaded"
           :date="state.sparklineDate"
           :price="state.sparklinePrice"
         />
         <v-card-text>
-          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(1)">
+          <v-chip
+            class="mr-2"
+            ref="1d"
+            @click="getSparklineDay({ day: 1, chartTitle: '1 Day' })"
+          >
             <v-icon left>mdi-alarm-check </v-icon>
             1 Day
           </v-chip>
-          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(7)">
+          <v-chip
+            class="mr-2"
+            ref="1d"
+            @click="
+              getSparklineDay({ day: 7, chartTitle: '7 Days' }),
+                (state.chartTitle = '7 Days')
+            "
+          >
             <v-icon left>mdi-alarm-check </v-icon>
             7 Day
           </v-chip>
-          <v-chip class="mr-2" ref="1d" @click="getSparklineDay(30)">
+          <v-chip
+            class="mr-2"
+            ref="1d"
+            @click="
+              getSparklineDay({ day: 30, chartTitle: '30 Days' }),
+                (state.chartTitle = '30 Days')
+            "
+          >
             <v-icon left>mdi-alarm-check </v-icon>
             1 Month
           </v-chip>
@@ -76,6 +95,7 @@ export default {
       crypto: null,
       cryptoName: null,
       cryptoDescription: {},
+      chartTitle: '',
       dataLoaded: false,
       sparklineDate: [],
       sparklinePrice: [],
@@ -83,26 +103,78 @@ export default {
     // API data call when crypto is clicked on
     const getCryptoAPI = async () => {
       const cryptoName = route.value.params.crypto
-      // console.log(state.cryptoName)
       const response = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${cryptoName}`
       )
       state.crypto = response.data
       state.cryptoName = response.data.name
       state.cryptoDescription = response.data.description.en
-      getSparklineDay(1)
+      getSparklineDay({ day: 1, chartTitle: '1 Day' })
+    }
+    const dateConverter = (data) => {
+      const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+      ]
+      const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ]
+      const today = new Date(data)
+      let hour = today.getHours()
+      let minute = today.getMinutes()
+      let seconds = today.getMinutes()
+      let dayName = days[today.getDay()]
+      let monthName = months[today.getMonth() + 1]
+      let date = `
+      ${dayName}${', '}${monthName} ${today.getDate()}th, ${today.getFullYear()} ${hour}:${minute}:${seconds} `
+      console.log(date)
+      return date
     }
     const getSparklineDay = async (data) => {
       state.sparklineDate = []
       state.sparklinePrice = []
       state.dataLoaded = false
       const sparklineData = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${state.cryptoName.toLowerCase()}/market_chart?vs_currency=usd&days=${data}`
+        `https://api.coingecko.com/api/v3/coins/${state.cryptoName.toLowerCase()}/market_chart?vs_currency=usd&days=${
+          data.day
+        }`
       )
-      sparklineData.data.prices.map((el) => {
-        state.sparklineDate.push(new Date(el[0]).toLocaleDateString())
-        state.sparklinePrice.push(el[1])
-      })
+      switch (data.chartTitle) {
+        case '1 Day':
+          console.log('1 Day')
+          sparklineData.data.prices.map((el) => {
+            state.sparklineDate.push(dateConverter(el[0]))
+            state.sparklinePrice.push(el[1])
+          })
+          console.log(state.sparklineDate)
+          break
+        case '7 Days':
+          console.log('7 Days')
+          break
+        case '30 Days':
+          sparklineData.data.prices.map((el) => {
+            state.sparklineDate.push(new Date(el[0]).toLocaleDateString())
+            state.sparklinePrice.push(el[1])
+          })
+          break
+      }
+
       // console.log(state.sparklinePrice)
       state.dataLoaded = true
     }
