@@ -68,7 +68,7 @@ export default {
         `https://api.coingecko.com/api/v3/coins/${cryptoName}`
       )
       state.crypto = response.data
-      state.cryptoName = response.data.name
+      state.cryptoName = response.data.id
       state.cryptoDescription = response.data.description.en
     }
 
