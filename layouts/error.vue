@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
+  <div class="container">
+    <section class="content">
+      <h1 v-if="error.statusCode === 404">
+        {{ pageNotFound }}
+      </h1>
+      <h1 v-else>
+        {{ otherError }}
+      </h1>
+      <NuxtLink to="/"> Home page </NuxtLink>
+    </section>
+    <section class="image">
+      <img src="/error.jpg" alt="" />
+    </section>
   </div>
 </template>
 
@@ -36,7 +41,20 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 20px;
+h1,
+a {
+  font-size: 3rem;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.image {
+  width: 50%;
+}
+img {
+  width: 80%;
 }
 </style>
