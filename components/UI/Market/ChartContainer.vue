@@ -1,6 +1,8 @@
 <template>
   <div class="line-chart-container">
-    <span class="chart-title">{{ state.cryptoName }}</span>
+    <div class="top-container">
+      <span class="chart-timeline">{{ state.chartTimeOption }}</span>
+    </div>
     <div v-if="state.dataLoaded !== false">
       <line-chart
         :chartData="state.chartData"
@@ -92,15 +94,16 @@ export default {
       state.chartData.labels = []
       state.chartData.datasets[0].data = []
       state.dataLoaded = false
-      console.log(data)
       const sparklineData = await axios.get(
         `https://api.coingecko.com/api/v3/coins/${cryptoName.toLowerCase()}/market_chart?vs_currency=usd&days=${
           data.day
         }`
       )
+
       switch (data.chartTimeOption) {
+        
         case '1 Day':
-          console.log('1 Day')
+          state.chartTimeOption = data.chartTimeOption
           sparklineData.data.prices.map((el) => {
             state.chartData.labels.push(dateConverter(el[0]))
             if (el[1] > 1) {
@@ -111,6 +114,7 @@ export default {
           })
           break
         case '7 Days':
+          state.chartTimeOption = data.chartTimeOption
           sparklineData.data.prices.map((el) => {
             state.chartData.labels.push(dateConverter(el[0]))
             if (el[1] > 1) {
@@ -121,6 +125,7 @@ export default {
           })
           break
         case '30 Days':
+          state.chartTimeOption = data.chartTimeOption
           sparklineData.data.prices.map((el) => {
             state.chartData.labels.push(new Date(el[0]).toLocaleDateString())
             if (el[1] > 1) {
@@ -137,6 +142,7 @@ export default {
     }
     const state = reactive({
       dataLoaded: false,
+      chartTimeOption: "",
       // Chart Options
       options: {
         //Display the name of the graph
