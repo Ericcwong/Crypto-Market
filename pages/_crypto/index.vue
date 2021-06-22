@@ -2,8 +2,7 @@
   <div class="container">
     <v-card elevation="2" v-if="state.crypto !== null">
       <div class="top-card-container">
-        <span class="ranking">Rank {{ state.crypto.coingecko_rank }}</span>
-        <v-card-title>
+        <v-card-title class="crypto">
           <img :src="state.crypto.image.thumb" alt="Thumbnail" />
           <span class="name">{{ state.crypto.name }}</span>
           <v-card-subtitle>{{
@@ -19,6 +18,9 @@
         <span class="price" v-else>{{
           state.crypto.market_data.current_price.usd
         }}</span>
+        <div class="crypto-information">
+          <span class="ranking">Rank: {{ state.crypto.coingecko_rank }}</span>
+        </div>
       </div>
       <div class="middle-card-container">
         <ChartContainer :cryptoName="state.cryptoName" />
@@ -84,8 +86,12 @@ export default {
   color: white;
 }
 .top-card-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.top-card-container > .crypto-information,
+span {
+  padding: 16px;
 }
 .middle-card-container {
   /* height: 30vh; */
@@ -93,5 +99,8 @@ export default {
 .name,
 .price {
   font-size: 3rem;
+}
+.price {
+  text-align: right;
 }
 </style>
