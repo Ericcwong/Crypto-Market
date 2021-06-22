@@ -1,19 +1,21 @@
 <template>
   <div class="container">
     <section class="Home">
-      <v-btn
-        v-scroll="onScroll"
-        v-show="state.fab"
-        fab
-        dark
-        fixed
-        bottom
-        right
-        color="primary"
-        @click="toTop"
-      >
-        <v-icon>mdi-chevron-up</v-icon>
-      </v-btn>
+      <v-fab-transition>
+        <v-btn
+          v-scroll="onScroll"
+          v-show="state.fab"
+          fab
+          dark
+          fixed
+          bottom
+          right
+          color="primary"
+          @click="toTop"
+        >
+          <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
       <MarketCap />
       <span class="title">Cryptocurrency Prices by Market Cap</span>
       <div class="crypto-table">
