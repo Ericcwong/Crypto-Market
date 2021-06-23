@@ -1,7 +1,7 @@
 <template>
   <div class="line-chart-container">
     <div class="top-container">
-      <span class="chart-timeline">{{ state.chartTimeOption }}</span>
+      <span class="chart-timeline">{{ state.chartTimeOption }} Chart</span>
     </div>
     <div v-if="state.dataLoaded !== false">
       <line-chart
@@ -11,29 +11,21 @@
     </div>
 
     <v-card-text>
+      <h6>Chart Options:</h6>
       <v-chip
+        v-for="button in state.buttonOptions"
+        :key="button.day"
         class="mr-2"
         ref="1d"
-        @click="getSparklineDay({ day: 1, chartTimeOption: '1 Day' })"
+        @click="
+          getSparklineDay({
+            day: button.day,
+            chartTimeOption: button.chartTimeOption,
+          })
+        "
       >
-        <v-icon left>mdi-alarm-check </v-icon>
-        1 Day
-      </v-chip>
-      <v-chip
-        class="mr-2"
-        ref="1d"
-        @click="getSparklineDay({ day: 7, chartTimeOption: '7 Days' })"
-      >
-        <v-icon left>mdi-alarm-check </v-icon>
-        7 Day
-      </v-chip>
-      <v-chip
-        class="mr-2"
-        ref="1d"
-        @click="getSparklineDay({ day: 30, chartTimeOption: '30 Days' })"
-      >
-        <v-icon left>mdi-alarm-check </v-icon>
-        1 Month
+        <v-icon left>mdi-calendar </v-icon>
+        {{ button.chartDescription }}
       </v-chip>
     </v-card-text>
   </div>
@@ -101,7 +93,6 @@ export default {
       )
 
       switch (data.chartTimeOption) {
-        
         case '1 Day':
           state.chartTimeOption = data.chartTimeOption
           sparklineData.data.prices.map((el) => {
@@ -136,13 +127,18 @@ export default {
           })
           break
       }
-
-      console.log(state.chartData.datasets[0].data)
       state.dataLoaded = true
     }
     const state = reactive({
       dataLoaded: false,
-      chartTimeOption: "",
+      chartTimeOption: '',
+      buttonOptions: [
+        { day: 1, chartTimeOption: '1 Day', chartDescription: '1 Day' },
+        { day: 7, chartTimeOption: '7 Days', chartDescription: '7 Days' },
+        { day: 30, chartTimeOption: '30 Days', chartDescription: '30 Days' },
+        { day: 183, chartTimeOption: '30 Days', chartDescription: '6 Months' },
+        { day: 365, chartTimeOption: '30 Days', chartDescription: '1 Year' },
+      ],
       // Chart Options
       options: {
         //Display the name of the graph
@@ -193,12 +189,17 @@ export default {
 </script>
 
 <style scoped>
-/* @media only screen and (min-width: 1260px) {
-  .line-chart-container {
-    display: grid;
-    justify-content: center;
-    width: 90%;
-    height: 10vh;
-  }
-} */
+.top-container {
+  margin-bottom: 5%;
+  text-align: center;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
+.chart-detail {
+}
+.v-card__text {
+  margin-top: 5%;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+}
 </style>
