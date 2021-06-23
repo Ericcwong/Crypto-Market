@@ -1,5 +1,5 @@
 <template>
-  <div v-if="state.cryptos !== null">
+  <div class="crypto-container" v-if="state.cryptos !== null">
     <v-card
       elevation="4"
       outlined
@@ -71,8 +71,11 @@
       </div>
     </v-card>
     <div
+      class="bottom-detector"
       v-if="state.cryptos.length"
-      v-observe-visibility="handleScrolledToBottom"
+      v-observe-visibility="{
+        callback: handleScrolledToBottom,
+      }"
     ></div>
   </div>
 </template>
@@ -106,7 +109,7 @@ export default {
       }
     }
     onBeforeMount(getPriceAPI)
-    function handleScrolledToBottom(isVisible) {
+    const handleScrolledToBottom = (isVisible) => {
       if (!isVisible) {
         return
       } else if (state.loaded !== 100) {
@@ -120,6 +123,9 @@ export default {
 </script>
 
 <style scoped>
+.crypto-container {
+  height: 100%;
+}
 .crypto-data {
   display: grid;
   grid-template-columns: 10% 15% 15% 10% 10% 15% 25%;
@@ -150,16 +156,13 @@ a {
   /* width: 100%; */
   grid-area: chart;
 }
-/* @media only screen and (max-width: 1260px) {
-  .crypto-data {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-areas:
-      'rank name price'
-      '24h 7d market-cap'
-      'chart chart chart';
-  }
-} */
+.bottom-detector {
+  margin-top: -60%;
+  border: 3px dotted yellow;
+  height: 200px;
+  position: absolute;
+  z-index: -1;
+}
 @media only screen and (max-width: 630px) {
   .crypto-data {
     display: grid;
