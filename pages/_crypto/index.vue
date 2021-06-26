@@ -38,7 +38,9 @@
           </span>
           <span class="circulating-supply"
             >Circulating Supply:
-            {{ state.crypto.market_data.circulating_supply }}</span
+            {{
+              state.crypto.market_data.circulating_supply.toLocaleString()
+            }}</span
           >
         </div>
       </div>
