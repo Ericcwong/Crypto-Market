@@ -70,24 +70,40 @@
         </div>
       </div>
     </v-card>
-    <div
+    <!-- <div
       class="bottom-detector"
       v-if="state.cryptos.length"
       v-observe-visibility="{
         callback: handleScrolledToBottom,
       }"
-    ></div>
+    ></div> -->
+    <div class="text-center">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-container class="max-width">
+              <v-pagination
+                @input="pagination"
+                v-model="state.page"
+                class="my-4"
+                :length="11"
+              ></v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { onBeforeMount, reactive } from '@nuxtjs/composition-api'
+import { onBeforeMount, reactive, watchEffect } from '@nuxtjs/composition-api'
 export default {
   setup() {
     const state = reactive({
       cryptos: null,
-      loaded: 20,
+      loaded: 100,
       page: 1,
     })
     // Main API data call
@@ -117,7 +133,17 @@ export default {
         getPriceAPI()
       }
     }
-    return { getPriceAPI, state, handleScrolledToBottom, redOrGreen }
+    const pagination = () => {
+      getPriceAPI()
+      window.scrollTo(0, 0)
+    }
+    return {
+      getPriceAPI,
+      state,
+      handleScrolledToBottom,
+      redOrGreen,
+      pagination,
+    }
   },
 }
 </script>
