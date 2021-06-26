@@ -104,7 +104,7 @@ export default {
 .container {
   display: grid;
 
-  height: 100vh;
+  height: 100%;
   color: white;
 }
 .top-card-container {
@@ -113,6 +113,11 @@ export default {
 }
 .top-card-container > .crypto-information {
   grid-column: 1 / span 2;
+}
+.crypto-information {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
 }
 span {
   padding: 16px;
