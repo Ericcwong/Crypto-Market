@@ -125,14 +125,14 @@ export default {
       }
     }
     onBeforeMount(getPriceAPI)
-    const handleScrolledToBottom = (isVisible) => {
-      if (!isVisible) {
-        return
-      } else if (state.loaded !== 100) {
-        state.loaded += 20
-        getPriceAPI()
-      }
-    }
+    // const handleScrolledToBottom = (isVisible) => {
+    //   if (!isVisible) {
+    //     return
+    //   } else if (state.loaded !== 100) {
+    //     state.loaded += 20
+    //     getPriceAPI()
+    //   }
+    // }
     const pagination = () => {
       getPriceAPI()
       window.scrollTo(0, 0)
@@ -140,7 +140,6 @@ export default {
     return {
       getPriceAPI,
       state,
-      handleScrolledToBottom,
       redOrGreen,
       pagination,
     }
