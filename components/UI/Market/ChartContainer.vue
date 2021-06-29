@@ -138,6 +138,11 @@ export default {
         { day: 30, chartTimeOption: '30 Days', chartDescription: '30 Days' },
         { day: 183, chartTimeOption: '30 Days', chartDescription: '6 Months' },
         { day: 365, chartTimeOption: '30 Days', chartDescription: '1 Year' },
+        {
+          day: 'max',
+          chartTimeOption: '30 Days',
+          chartDescription: 'All time',
+        },
       ],
       // Chart Options
       options: {
