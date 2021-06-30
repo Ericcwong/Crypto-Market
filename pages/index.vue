@@ -17,7 +17,7 @@
         </v-btn>
       </v-fab-transition>
       <MarketCap />
-      <span class="title">Cryptocurrency Prices by Market Cap</span>
+      <h1 class="title">Cryptocurrency Ranked by Market Cap</h1>
       <div class="crypto-table">
         <Table />
       </div>
@@ -55,8 +55,9 @@ export default {
 <style scoped>
 .container {
   color: white;
+  width: 80%;
 }
 .title {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
 }
 </style>
