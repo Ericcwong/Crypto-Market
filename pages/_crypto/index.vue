@@ -45,7 +45,12 @@
         </div>
       </div>
       <div class="middle-card-container">
-        <ChartContainer :cryptoName="state.cryptoName" />
+        <v-progress-circular
+          v-if="!state.chartLoaded"
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
+        <ChartContainer v-else :cryptoName="state.cryptoName" />
       </div>
       <div class="bottom-card-container">
         <h4>Description:</h4>
@@ -83,6 +88,7 @@ export default {
       crypto: null,
       cryptoName: null,
       cryptoDescription: {},
+      chartLoaded: false,
     })
     // API data call when crypto is clicked on
     const getCryptoAPI = async () => {
@@ -94,6 +100,7 @@ export default {
       state.cryptoName = response.data.id
       state.cryptoDescription = response.data.description.en
       console.log(response.data)
+      state.chartLoaded = true
     }
 
     onBeforeMount(getCryptoAPI)
@@ -105,8 +112,8 @@ export default {
 <style scoped>
 .container {
   display: grid;
-
   height: 100%;
+  width: 80%;
   color: white;
 }
 .top-card-container {
@@ -134,7 +141,8 @@ span {
 .price {
   text-align: right;
 }
+
 .bottom-card-container {
-  margin: 5% 15% 0 15%;
+  margin: 0% 15% 0 15%;
 }
 </style>
