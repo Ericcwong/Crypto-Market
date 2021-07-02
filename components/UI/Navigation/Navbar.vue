@@ -1,82 +1,104 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="/">Home</b-navbar-brand>
+    <v-app-bar dense dark>
+      <v-toolbar-title>Home</v-toolbar-title>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <v-spacer></v-spacer>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <SearchBar />
-          <!-- Feature Coming soon! -->
-          <!-- <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown> -->
+      <v-dialog transition="dialog-bottom-transition" max-width="600">
+        <!-- <v-tooltip bottom> -->
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon dark> mdi-heart </v-icon>
+          </v-btn>
+        </template>
+        <!-- <span>Favorites</span> -->
+        <!-- </v-tooltip> -->
+        <!-- <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" v-bind="attrs" v-on="on"
+            >From the bottom</v-btn
+          >
+        </template> -->
+        <template v-slot:default="dialog">
+          <v-card>
+            <v-toolbar color="primary" dark>Opening from the bottom</v-toolbar>
+            <v-card-text>
+              <div class="text-h2 pa-12">Hello world!</div>
+            </v-card-text>
+            <v-card-actions class="justify-end">
+              <v-btn text @click="dialog.value = false">Close</v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
 
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              <em v-if="user === null">User</em>
-              <b-avatar v-if="user" :src="user.photoURL"></b-avatar>
+      <div class="user">
+        <div class="not-signed-in" v-if="!user">
+          <GoogleSignIn />
+        </div>
+        <div class="signed-in" v-else>
+          <span>{{ user }}</span>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <img v-bind="attrs" v-on="on" :src="userImage" />
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <GoogleSignIn v-if="user === null" />
-            <b-navbar-nav v-if="user">
-              <b-nav-text> Welcome, {{ user.displayName }} </b-nav-text>
-            </b-navbar-nav>
-            <b-dropdown-item @click="logout" v-if="user">
-              Logout
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+            <v-list>
+              <v-btn @click.prevent="logout">Logout</v-btn>
+            </v-list>
+          </v-menu>
+        </div>
+      </div>
+    </v-app-bar>
   </div>
 </template>
 
 <script>
 import GoogleSignIn from '~/components/Auth/GoogleSignIn'
-import SearchBar from '~/components/UI/Navigation/NavBarComponent/Search'
 export default {
-  components: {
-    GoogleSignIn,
-    SearchBar,
-  },
+  components: { GoogleSignIn },
   computed: {
     user() {
-      return this.$store.state.auth.user
+      if (this.$store.state.auth.user != null) {
+        return this.$store.state.auth.user.displayName
+      } else {
+        return
+      }
+    },
+    userImage() {
+      return this.$store.state.auth.user.photoURL
     },
   },
   data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-    }
+    return {}
   },
   methods: {
+    userFavorites() {
+      console.log(this.$store.state.auth.user)
+    },
     logout() {
       this.$store.dispatch('auth/logoutUser')
+    },
+    favorites() {
+      if (!this.user) {
+        this.$store.dispatch('auth/googleSignup')
+      }
     },
   },
 }
 </script>
 
 <style scoped>
-.navbar-text {
+.home-title {
+  color: white;
+}
+img {
   display: block;
-  width: 100%;
-  padding: 0.25rem 1.5rem;
-  clear: both;
-  font-weight: 400;
-  color: #212529;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
+  border-radius: 50%;
+  width: 25%;
+}
+.signed-in {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 </style>
