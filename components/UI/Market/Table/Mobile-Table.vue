@@ -33,64 +33,45 @@
           </v-card-title>
           <v-card-title v-else>${{ crypto.current_price }}</v-card-title>
         </div>
-        <v-card-actions class="expand">
-          <v-btn color="primary lighten-2" text> Explore </v-btn>
 
-          <v-spacer></v-spacer>
-
-          <v-btn icon @click="state.show = !state.show">
-            <v-icon>{{
-              state.show ? 'mdi-chevron-up' : 'mdi-chevron-down'
-            }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-
-        <v-expand-transition>
-          <div v-show="state.show">
-            <div class="crypto-24h">
-              <v-card-subtitle>24h %</v-card-subtitle>
-              <v-card-title
-                class="twenty-four-hour-percentage"
-                :style="[
-                  crypto.price_change_percentage_24h >= 0.0
-                    ? { color: '#00FF7F' }
-                    : { color: '#FF4500' },
-                ]"
-                >{{ crypto.price_change_percentage_24h.toFixed(2) }}%
-              </v-card-title>
-            </div>
-            <div class="crypto-7d">
-              <v-card-subtitle>7d %</v-card-subtitle>
-              <v-card-title
-                class="seven-day-percentage"
-                :style="[
-                  crypto.price_change_percentage_7d_in_currency >= 0.0
-                    ? { color: '#00FF7F' }
-                    : { color: '#FF4500' },
-                ]"
-                >{{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}%
-              </v-card-title>
-            </div>
-            <div class="crypto-market-cap">
-              <v-card-subtitle>Market Cap:</v-card-subtitle>
-              <v-card-title
-                >${{ crypto.market_cap.toLocaleString() }}</v-card-title
-              >
-            </div>
-            <div class="crypto-chart">
-              <v-card-subtitle>Last 7 days</v-card-subtitle>
-              <v-sparkline
-                :value="crypto.sparkline_in_7d.price"
-                :color="
-                  redOrGreen(crypto.price_change_percentage_7d_in_currency)
-                "
-                :auto-draw-duration="3000"
-                line-width="2"
-                auto-draw
-              ></v-sparkline>
-            </div>
-          </div>
-        </v-expand-transition>
+        <div class="crypto-24h">
+          <v-card-subtitle>24h %</v-card-subtitle>
+          <v-card-title
+            class="twenty-four-hour-percentage"
+            :style="[
+              crypto.price_change_percentage_24h >= 0.0
+                ? { color: '#00FF7F' }
+                : { color: '#FF4500' },
+            ]"
+            >{{ crypto.price_change_percentage_24h.toFixed(2) }}%
+          </v-card-title>
+        </div>
+        <div class="crypto-7d">
+          <v-card-subtitle>7d %</v-card-subtitle>
+          <v-card-title
+            class="seven-day-percentage"
+            :style="[
+              crypto.price_change_percentage_7d_in_currency >= 0.0
+                ? { color: '#00FF7F' }
+                : { color: '#FF4500' },
+            ]"
+            >{{ crypto.price_change_percentage_7d_in_currency.toFixed(2) }}%
+          </v-card-title>
+        </div>
+        <div class="crypto-market-cap">
+          <v-card-subtitle>Market Cap:</v-card-subtitle>
+          <v-card-title>${{ crypto.market_cap.toLocaleString() }}</v-card-title>
+        </div>
+        <div class="crypto-chart">
+          <v-card-subtitle>Last 7 days</v-card-subtitle>
+          <v-sparkline
+            :value="crypto.sparkline_in_7d.price"
+            :color="redOrGreen(crypto.price_change_percentage_7d_in_currency)"
+            :auto-draw-duration="3000"
+            line-width="2"
+            auto-draw
+          ></v-sparkline>
+        </div>
       </div>
     </v-card>
   </div>
@@ -161,10 +142,8 @@ a {
     grid-template-areas:
       'rank name'
       'price market-cap '
-      'expand expand'
       '24h 7d'
       'chart chart';
   }
 }
 </style>
-
