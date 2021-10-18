@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-app-bar dense dark>
-      <v-toolbar-title>Crypto Market</v-toolbar-title>
+      <v-toolbar-title>
+        <nuxt-link to="/"> Crypto Market</nuxt-link>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -102,5 +104,9 @@ img {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>
