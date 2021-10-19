@@ -115,7 +115,7 @@ span.crypto-chart {
   text-align: left;
 }
 .titles {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   position: -webkit-sticky;
   position: sticky;
   top: 0;

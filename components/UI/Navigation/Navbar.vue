@@ -1,25 +1,28 @@
 <template>
   <div>
     <v-app-bar dense dark>
-      <v-toolbar-title>Home</v-toolbar-title>
+      <v-toolbar-title>
+        <nuxt-link to="/"> Crypto Market</nuxt-link>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-dialog transition="dialog-bottom-transition" max-width="600">
-        <!-- <v-tooltip bottom> -->
-        <template v-slot:activator="{ on, attrs }">
+      <Search />
+      <!-- <v-dialog transition="dialog-bottom-transition" max-width="600"> -->
+      <!-- <v-tooltip bottom> -->
+      <!-- <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
             <v-icon dark> mdi-heart </v-icon>
           </v-btn>
-        </template>
-        <!-- <span>Favorites</span> -->
-        <!-- </v-tooltip> -->
-        <!-- <template v-slot:activator="{ on, attrs }">
+        </template> -->
+      <!-- <span>Favorites</span> -->
+      <!-- </v-tooltip> -->
+      <!-- <template v-slot:activator="{ on, attrs }">
           <v-btn color="primary" v-bind="attrs" v-on="on"
             >From the bottom</v-btn
           >
         </template> -->
-        <template v-slot:default="dialog">
+      <!-- <template v-slot:default="dialog">
           <v-card>
             <v-toolbar color="primary" dark>Opening from the bottom</v-toolbar>
             <v-card-text>
@@ -30,9 +33,9 @@
             </v-card-actions>
           </v-card>
         </template>
-      </v-dialog>
+      </v-dialog> -->
 
-      <div class="user">
+      <!-- <div class="user">
         <div class="not-signed-in" v-if="!user">
           <GoogleSignIn />
         </div>
@@ -47,15 +50,16 @@
             </v-list>
           </v-menu>
         </div>
-      </div>
+      </div> -->
     </v-app-bar>
   </div>
 </template>
 
 <script>
 import GoogleSignIn from '~/components/Auth/GoogleSignIn'
+import Search from '~/components/UI/Navigation/NavBarComponent/Search.vue'
 export default {
-  components: { GoogleSignIn },
+  components: { GoogleSignIn, Search },
   computed: {
     user() {
       if (this.$store.state.auth.user != null) {
@@ -100,5 +104,9 @@ img {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+a {
+  color: white;
+  text-decoration: none;
 }
 </style>
