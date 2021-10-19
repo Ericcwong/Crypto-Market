@@ -2,6 +2,8 @@
 
 <a href="https://ericcwong-crypto-market.herokuapp.com/">Deployed Link</a>
 
+<img src="https://i.ibb.co/8YpfDgK/Crypto-market.png" alt="Crypto-market" border="0" />
+
 ## About
 
 <p>Crypto market is my take on displaying current prices and information for each cryptocurrency. The data is called from Coingecko’s API when the page loads and for future changes, I plan to make the data update with the market. The graph on the homepage is generated using Vuetify’s sparkline. The detailed graph is generated using Chart.js.</p>
