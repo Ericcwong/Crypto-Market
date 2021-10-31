@@ -14,17 +14,13 @@
           <v-card-title>{{ crypto.market_cap_rank }}</v-card-title>
         </div>
         <div class="crypto-name">
-          <!-- <v-card-subtitle>Name:</v-card-subtitle> -->
-          <Nuxt-link :to="crypto.id">
-            <v-card-title style="color: white">
-              <img
-                style="width: 2rem"
-                :src="crypto.image"
-                :alt="crypto.id + ' icon'"
-              />&nbsp; {{ crypto.name }} &nbsp;
-              <small> {{ crypto.symbol.toUpperCase() }}</small>
-            </v-card-title>
-          </Nuxt-link>
+          <v-card-title style="color: white">
+            <img :src="crypto.image" :alt="crypto.id + ' icon'" />
+            <Nuxt-link :to="crypto.id">
+              {{ crypto.name }}
+            </Nuxt-link>
+          </v-card-title>
+          <small> {{ crypto.symbol.toUpperCase() }}</small>
         </div>
         <div class="crypto-price">
           <!-- <v-card-subtitle>Price:</v-card-subtitle> -->
@@ -104,7 +100,7 @@ export default {
 .crypto-data,
 .titles {
   display: grid;
-  grid-template-columns: 6% 14% 11% 12% 12% 20% 25%;
+  grid-template-columns: 6% 22% 11% 12% 12% 14% 23%;
   grid-template-areas: 'rank name price 24h 7d market-cap chart';
   align-items: center;
 }
@@ -117,15 +113,8 @@ span.crypto-chart {
   padding-left: 8%;
   text-align: left;
 }
-.titles {
+.v-card__title {
   font-size: 1rem;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 4;
-  background: hsla(210, 10%, 23%, 1);
-  color: white;
-  text-align: center;
 }
 .twenty-four-hour-percentage,
 .seven-day-percentage {
@@ -143,7 +132,14 @@ a {
   grid-area: rank;
 }
 .crypto-name {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   grid-area: name;
+}
+img {
+  margin-right: 0.5rem;
+  width: 2rem;
 }
 .crypto-price {
   grid-area: price;
