@@ -19,29 +19,38 @@
           state.crypto.market_data.current_price.usd
         }}</span>
         <div class="crypto-information">
-          <span class="ranking"
-            >Market cap rank: #{{ state.crypto.market_cap_rank }}
-          </span>
-          <span
-            >Market Cap: ${{
-              state.crypto.market_data.market_cap.usd.toLocaleString()
-            }}
-          </span>
-          <span class="ath"
-            >ATH: ${{ state.crypto.market_data.ath.usd.toFixed(2) }}
-          </span>
-          <span class="24h-high"
-            >24 Hour High: ${{ state.crypto.market_data.high_24h.usd }}
-          </span>
-          <span class="24h-low"
-            >24 Hour Low: ${{ state.crypto.market_data.low_24h.usd }}
-          </span>
-          <span class="circulating-supply"
-            >Circulating Supply:
-            {{
-              state.crypto.market_data.circulating_supply.toLocaleString()
-            }}</span
-          >
+          <div class="current-results">
+            <span class="ranking"
+              >Market cap rank: #{{ state.crypto.market_cap_rank }}
+            </span>
+            <span
+              >Market Cap: ${{
+                state.crypto.market_data.market_cap.usd.toLocaleString()
+              }}
+            </span>
+            <span class="24h-high"
+              >24 Hour <span class="day-high-color">High</span> : ${{
+                state.crypto.market_data.high_24h.usd
+              }}
+            </span>
+            <span class="24h-low"
+              >24 Hour <span class="day-low-color">Low</span> : ${{
+                state.crypto.market_data.low_24h.usd
+              }}
+            </span>
+            <span class="circulating-supply"
+              >Circulating Supply:
+              {{
+                state.crypto.market_data.circulating_supply.toLocaleString()
+              }}</span
+            >
+          </div>
+          <div class="historic-data">
+            <span class="ath"
+              >ATH: ${{ state.crypto.market_data.ath.usd.toFixed(2) }}
+            </span>
+          </div>
+          <div class="links">testing</div>
         </div>
       </div>
       <div class="middle-card-container">
@@ -116,6 +125,7 @@ export default {
   width: 80%;
   color: white;
 }
+/* Header: Name and price */
 .top-card-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -124,12 +134,14 @@ export default {
   grid-column: 1 / span 2;
 }
 .crypto-information {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  /* text-align: center; */
 }
 span {
-  padding: 16px;
+  /* padding: 16px; */
 }
 .middle-card-container {
   /* height: 30vh; */
@@ -141,7 +153,17 @@ span {
 .price {
   text-align: right;
 }
+.current-results {
+  display: grid;
+  grid-auto-flow: row;
+}
 
+.day-high-color {
+  color: rgb(70, 253, 95);
+}
+.day-low-color {
+  color: rgb(253, 70, 70);
+}
 .bottom-card-container {
   margin: 0% 15% 0 15%;
 }
