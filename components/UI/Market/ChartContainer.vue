@@ -171,6 +171,13 @@ export default {
               display: false,
             },
           ],
+          yAxes: [
+            {
+              gridLines: {
+                color: 'hsla(120, 60%, 70%, 0.3)',
+              },
+            },
+          ],
         },
       },
       chartData: {
