@@ -27,6 +27,6 @@
 </ul>
 
 ## What I learned from this project
-
+<p>API calls and data destructuring.<p>
 <p>A small progression to better design. Although, this project does not display any outstanding design I was able to learn more on creating grids and flex components with CSS.</p>
 <p>Take a step back and read the documentation. I felt the rush to get a quick answer to solve my issue. The issue was the graph was not displaying correct information on the x-axis. I searched up and down on Stackoverflow and other web pages to get the answer. When the answer was on the Chart.js’s documentation.</p>
